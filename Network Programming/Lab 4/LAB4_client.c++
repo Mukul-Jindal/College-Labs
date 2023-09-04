@@ -24,9 +24,9 @@ int main()
         cout<<"Enter Message: ";
         fgets(sendMessage,100,stdin);
         send(socketID, sendMessage, sizeof(sendMessage), 0);
-        if(sendMessage == "exit")
+        if (strcmp(sendMessage, "exit\n") == 0)
         {
-            cout<<"Exiting.......";
+            cout << "Exiting.......\n";
             break;
         }
         recv(socketID, receiveMessage, sizeof(receiveMessage), 0);

@@ -27,9 +27,9 @@ int main()
         recv(comm_fd, receiveMessage, sizeof(receiveMessage), 0);
         cout << "Recieved Message: " << receiveMessage<<endl;
         cout << "Enter Message: ";
-        if (receiveMessage == "exit")
+        if (strcmp(receiveMessage, "exit\n") == 0)
         {
-            cout << "Exiting........";
+            cout << "Exiting.......\n";
             break;
         }
         fgets(sendMessage,100,stdin);
