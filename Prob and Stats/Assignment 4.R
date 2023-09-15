@@ -1,37 +1,42 @@
-# # Q1
-# x=c(0,1,2,3,4)
-# probX = c(0.41,0.37,0.16,0.05,0.01)
-# print(x[3])
-# expected_Value = sum(x*probX)
-# print(expectedValue)
+# Q1
+x=c(0,1,2,3,4)
+probX = c(0.41,0.37,0.16,0.05,0.01)
+print(x[3])
+expected_Value = sum(x*probX)
+print(expected_Value)
+expected_Value = weighted.mean(x = x,w = probX)
+print(expected_Value)
+expected_Value = c(x%*%probX)
+print(expected_Value)
 
-# # Q2
 
-# expectedValue <- function (t){
-#     t*0.1*exp(-0.1*t)
-# }
+# Q2
 
-# integration123<- integrate(expectedValue,lower = 0,upper = Inf)
-# print(integration123$value)
+express <- function (t){
+    t*0.1*exp(-0.1*t)
+}
 
-# # Q3
-# x = c(0,1,2,3)
-# probX = c(0.1,0.2,0.2,0.5)
+integration123<- integrate(express,lower = 0,upper = Inf)
+print(integration123$value)
 
-# y= 10 *x - 12 
-# expectedValue = sum(y * probX)
-# print(expectedValue)
+# Q3
+x = c(0,1,2,3)
+probX = c(0.1,0.2,0.2,0.5)
 
-# # Q4
-# firstMoment1 <- function(t){t*0.5*exp(-1*abs(t))}
-# firstMoment2 <- function(t){t*t*0.5*exp(-1*abs(t))}
-# firstMoment <- integrate(firstMoment1,lower = 1,upper = 10)
-# secondMoment <- integrate(firstMoment2,lower = 1,upper = 10)
-# print(firstMoment$value)
-# print(secondMoment$value)
+y= 10 *x - 12 
+expectedValue = sum(y * probX)
+print(expectedValue)
 
-# variance = secondMoment$value - (firstMoment$value*firstMoment$value)
-# print(variance)
+# Q4
+firstMoment1 <- function(t){t*0.5*exp(-1*abs(t))}
+firstMoment2 <- function(t){t*t*0.5*exp(-1*abs(t))}
+firstMoment <- integrate(firstMoment1,lower = 1,upper = 10)
+secondMoment <- integrate(firstMoment2,lower = 1,upper = 10)
+print(firstMoment$value)
+print(secondMoment$value)
+
+variance = secondMoment$value - (firstMoment$value*firstMoment$value)
+print(variance)
 
 # Q5
 f<- function (y){(3/4)*(1/4)^(sqrt(y)-1)}
