@@ -1,45 +1,25 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <netdb.h>
-#include <sys/socket.h>
-#include <unistd.h>
-
-#define BROADCAST_ADDR "172.16.95.255"
-#define MAX_MESSAGE_LEN 1024
-#define PORT 12345
-
-int main()
-{
-    int client_socket;
-    struct sockaddr_in server_addr, client_addr;
-
-    socklen_t client_addr_len = sizeof(client_addr);
-
-    client_socket = socket(AF_INET, SOCK_DGRAM, 0);
-
-    server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(PORT);
-    server_addr.sin_addr.s_addr = INADDR_ANY;
-
-    int reuse_addr = 1;
-
-    setsockopt(client_socket, SOL_SOCKET, SO_REUSEADDR, &reuse_addr, sizeof(reuse_addr));
-
-    bind(client_socket, (struct sockaddr *)&server_addr, sizeof(server_addr));
-
-    char message[MAX_MESSAGE_LEN];
-
-    while (1)
-    {
-        printf("Waiting for message from server\n");
-        int bytes_recieved = recvfrom(client_socket, message, MAX_MESSAGE_LEN, 0, (struct sockaddr *)&client_addr, &client_addr_len);
-
-        message[bytes_recieved] = '\0';
-
-        printf("Message recieved: %s\n", message);
-    }
-
-    close(client_socket);
-
-    return 0;
+#include<stdio.h>
+#include<string.h>
+#include<netdb.h>
+#include<arpa/inet.h>
+#include<unistd.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+int main(){
+  char str[100];
+  struct sockaddr_in servaddr,clientaddr;
+  int broad=1,sock,s;
+  sock=socket(AF_INET,SOCK_DGRAM,0);
+  bzero(&servaddr,sizeof(servaddr));
+  bzero(str,100);
+  setsockopt(sock,SOL_SOCKET,SO_BROADCAST,&broad,sizeof(broad));
+  servaddr.sin_family=AF_INET;
+  servaddr.sin_addr.s_addr=inet_addr("172.16.95.255");
+  servaddr.sin_port=htons(12345);
+  s=sizeof(servaddr);
+  while(1){
+   printf("Enter the message to broadcast: \n");
+   fgets(str,100,stdin);
+   sendto(sock,str,sizeof(str),0,(struct sockaddr*)&servaddr,s);
+  }
 }
