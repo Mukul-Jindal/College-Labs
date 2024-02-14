@@ -1,4 +1,4 @@
-install.packages("pracman")
+#install.packages("pracman")
 library('pracma')
 
 #Q1 A
@@ -71,3 +71,9 @@ variancey
 
 exy = sum(x*y*f(x,y))
 exy
+
+covXY = exy - (ex*ey)
+covXY
+
+corCoeff = covXY/sqrt(variancex*variancey)
+corCoeff

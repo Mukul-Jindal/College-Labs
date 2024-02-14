@@ -1,7 +1,7 @@
+#include<bits/stdc++.h>
 #include<sys/socket.h>
 #include<sys/types.h>
 #include<netdb.h>
-#include<bits/stdc++.h>
 using namespace std;
 
 int main()

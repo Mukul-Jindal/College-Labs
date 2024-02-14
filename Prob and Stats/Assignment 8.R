@@ -1,7 +1,8 @@
-data = read.csv('./Clt-data.csv')
+data = read.csv('D:/College-Labs/Prob and Stats/Clt-data.csv')
 dim(data)
 head(data,10)
 dataMean=mean(data$Wall.Thickness)
+dataMean
 hist(data$Wall.Thickness,xlab = 'X- Axis')
 abline(v = dataMean, col = 'red' )
 

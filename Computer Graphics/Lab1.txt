@@ -1,0 +1,189 @@
+             Install Ubuntu as VM
+1. Download and install Oracle Virtual Box: https://www.virtualbox.org/wiki/Downloads
+Under “VirtualBox 6.1.12 platform packages”, click on hosts as per your OS eg. For windows, click on “Windows hosts”.
+2. Download Ubuntu: https://ubuntu.com/download/desktop 
+After installing Virtual Box, follow below link to install Ubuntu in it https://itsfoss.com/install-linux-in-virtualbox/
+
+After installing VM, just execute the following command (like installing any other thing) in terminal : 
+in terminal window
+
+execute 1:
+1: sudo apt-get update
+after execute 2:
+2:sudo apt-get install freeglut3-dev
+
+Now create a  file using extension .c
+
+cat > x.c,  vi x.c  , gedit  x.c
+ 
+After writing any program under x.c exit it from CTRL+D
+then compile using 
+g++ x.c -lGL -lGLU -lglut
+or
+gcc x.c -lGL -lGLU -lglut 
+
+then write 
+./a.out
+
+
+where x.c is the following program
+with which this program is saved.
+/*****DDA Line drawing Algorithm*****/
+
+#include <stdio.h>
+#include <math.h>
+#include <GL/glut.h>
+
+double X1, Y1, X2, Y2;
+
+float round_value(float v)
+{
+  return floor(v + 0.5);
+}
+void LineDDA(void)
+{
+  double dx=(X2-X1);
+  double dy=(Y2-Y1);
+  double steps;
+  float xInc,yInc,x=X1,y=Y1;
+  /* Find out whether to increment x or y */
+
+  steps=(abs(dx)>abs(dy))?(abs(dx)):(abs(dy));
+  xInc=dx/(float)steps;
+  yInc=dy/(float)steps;
+
+  /* Clears buffers to preset values */
+
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  /* Plot the points */
+
+  glBegin(GL_POINTS);
+  /* Plot the first point */
+  glVertex2d(x,y);
+  int k;
+  /* For every step, find an intermediate vertex */
+
+  for(k=0;k<steps;k++)
+  {
+    x+=xInc;
+    y+=yInc;
+    /* printf("%0.6lf %0.6lf\n",floor(x), floor(y)); */
+    glVertex2d(round_value(x), round_value(y));
+  }
+
+  glEnd();
+
+  glFlush();
+}
+void Init()
+{
+  /* Set clear color to white */
+  glClearColor(1.0,1.0,1.0,0);
+
+  /* Set fill color to black */
+
+  glColor3f(0.0,0.0,0.0);
+  /* glViewport(0 , 0 , 640 , 480); */
+  /* glMatrixMode(GL_PROJECTION); */
+  /* glLoadIdentity(); */
+  gluOrtho2D(0 , 640 , 0 , 480);
+}
+void main(int argc, char **argv)
+{
+  printf("Enter two end points of the line to be drawn:\n");
+  printf("\n************************************");
+  printf("\nEnter Point1( X1 , Y1):\n");
+  scanf("%lf%lf",&X1,&Y1);
+  printf("\n************************************");
+  printf("\nEnter Point1( X2 , Y2):\n");
+  scanf("%lf%lf",&X2,&Y2);
+  
+  /* Initialise GLUT library */
+  glutInit(&argc,argv);
+  /* Set the initial display mode */
+  glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+  /* Set the initial window position and size */
+  glutInitWindowPosition(0,0);
+  glutInitWindowSize(640,480);
+  /* Create the window with title "DDA_Line" */
+  glutCreateWindow("DDA_Line");
+  /* Initialize drawing colors */
+  Init();
+  /* Call the displaying function */
+  glutDisplayFunc(LineDDA);
+  /* Keep displaying untill the program is closed */
+  glutMainLoop();
+}
+
+
+/**********Procedure-2
+#include<GL/glut.h>
+#include<stdlib.h>
+#include<stdio.h>
+float x1,x2,y1,y2;
+ 
+void display(void)
+{
+float dy,dx,step,x,y,k,Xin,Yin;
+dx=x2-x1;
+dy=y2-y1;
+ 
+if(abs(dx)> abs(dy))
+{
+step = abs(dx);
+}
+else
+step = abs(dy);
+ 
+Xin = dx/step;
+Yin = dy/step;
+ 
+x= x1;
+y=y1;
+glBegin(GL_POINTS);
+glVertex2i(x,y);
+glEnd();
+ 
+for (k=1 ;k<=step;k++)
+{
+x= x + Xin;
+y= y + Yin;
+ 
+glBegin(GL_POINTS);
+glVertex2i(x,y);
+glEnd();
+}
+ 
+ 
+glFlush();
+}
+ 
+void init(void)
+{
+glClearColor(0.7,0.7,0.7,0.7);
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+gluOrtho2D(-100,100,-100,100);
+}
+ 
+int main(int argc, char** argv) {
+printf("Enter the value of x1 : ");
+scanf("%f",&x1);
+printf("Enter the value of y1 : ");
+scanf("%f",&y1);
+printf("Enter the value of x2 : ");
+scanf("%f",&x2);
+printf("Enter the value of y2 : ");
+scanf("%f",&y2);
+ 
+glutInit(&argc, argv);
+glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+glutInitWindowSize (500, 500);
+glutInitWindowPosition (100,100);
+glutCreateWindow ("DDA Line Algo");
+init();
+glutDisplayFunc(display);
+glutMainLoop(); 
+return 0;
+}
