@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "string.h": "c",
+        "*.rmd": "markdown",
+        "*.py": "python",
+        "stdio.h": "c"
+    }
+}
