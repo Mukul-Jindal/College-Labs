@@ -1,0 +1,14 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract valueChanger{
+    uint public value;
+
+    event valueChanged(uint previousValue, uint newValue, address indexed caller);
+
+    function setValue(uint _newValue) public {
+        uint previousValue = value;
+        value = _newValue;
+        emit valueChanged(previousValue, value, msg.sender);
+    }
+}

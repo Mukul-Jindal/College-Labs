@@ -1,0 +1,52 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract shape{
+    uint public perimeter;
+    uint public area;
+
+    function calculateArea() virtual public returns (uint){
+        revert("Not implemented");
+    }
+    function calculatePerimeter() virtual public returns (uint){
+        revert("Not implemented");
+    }
+}
+
+contract circle is shape{
+    uint public radius;
+
+    constructor(uint _radius){
+        radius = _radius;
+    }
+
+    function calculateArea() public view override returns (uint){
+        return 314 * radius * radius / 100;
+    }
+
+    function calculatePerimeter() public view override returns (uint){
+        return 2 * 314 * radius / 100;
+    }
+}
+
+contract rectangle is shape{
+    uint length;
+    uint breadth;
+
+    constructor(uint len, uint bread){
+        length = len;
+        bread = breadth;
+    }
+
+    function calculateArea() public view override returns (uint) {
+        return length * breadth;
+    }
+
+    function calculatePerimeter() public view override returns(uint){
+        return 2 * (length + breadth);
+    }
+}
+
+contract square is rectangle{
+    constructor(uint _side) rectangle(_side,_side){}
+}

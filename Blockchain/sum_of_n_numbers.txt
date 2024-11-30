@@ -1,0 +1,39 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+
+contract sumOfFirstN{
+    int n;
+    constructor(int a){
+        n = a;
+    }
+    function sumByForLoop() public view returns (int){
+        int sum = 0;
+        for (int i = 0; i < n; i++) 
+        {
+            sum = sum + (i + 1);
+        }
+        return sum;
+    }
+
+    function sumByWhileLoop() public view returns (int){
+        int sum = 0;
+        int temp = n;
+        while (temp >= 0) 
+        {
+            sum = sum + temp;
+            temp--;
+        }
+        return sum;
+    }
+
+    function sumByDoWhileLoop() public view returns (int){
+        int sum = 0;
+        int temp = n;
+        do {
+            sum = sum + temp;
+            temp--;
+        } 
+        while (temp >= 0);
+    }
+}

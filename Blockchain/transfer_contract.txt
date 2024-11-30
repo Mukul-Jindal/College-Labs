@@ -1,0 +1,56 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract financialContract{
+    function receiveDeposit() payable public {
+
+    }
+    function getBalance() public view returns (uint){
+        return address(this).balance;
+    }
+}
+
+contract EtherTransfer {
+    // Function to receive Ether
+    function receiveDeposit() payable public {
+
+    }
+
+    // Function to send Ether to a specified address
+    function sendEther(address payable _to, uint _amount) public payable {
+        require(msg.value >= _amount, "Insufficient funds");
+        (bool sent, ) = _to.call{value: _amount}("");
+        require(sent, "Failed to send Ether");
+    }
+}
+
+contract SimpleWallet {
+    address public owner;
+
+    // Contract constructor sets the owner
+    constructor() {
+        owner = msg.sender;
+    }
+
+    // Modifier to check if the caller is the owner
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call this function");
+        _;
+    }
+
+    // Function to receive ethers
+    receive() external payable {
+        // This function is called when sending ethers to the contract
+    }
+
+    // Function to withdraw ethers from the contract
+    function withdraw(uint256 amount) external onlyOwner {
+        require(amount <= address(this).balance, "Insufficient balance");
+        payable(msg.sender).transfer(amount);
+    }
+
+    // Function to get the contract balance
+    function getBalance() external view returns (uint256) {
+        return address(this).balance;
+    }
+}
